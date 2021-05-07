@@ -1,6 +1,5 @@
 const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-text"));
-// console.log(choices);
 
 let currentQuestion = {};
 let acceptingAnswers = false;
@@ -73,9 +72,16 @@ choices.forEach((choice) => {
 		acceptingAnswers = false;
 
 		const selectedChoice = e.target;
-		const selectedAnswer = selectedChoice.dataset["number"];
+		const selectedAnswer = +selectedChoice.dataset["number"];
 
-		getNewQuestion();
+		const classToApply = selectedAnswer === currentQuestion.answer ? "correct" : "incorrect";
+
+		selectedChoice.parentElement.classList.add(classToApply);
+
+		setTimeout(() => {
+			selectedChoice.parentElement.classList.remove(classToApply);
+			getNewQuestion();
+		}, 1000);
 	});
 });
 
